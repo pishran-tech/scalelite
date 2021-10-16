@@ -10,7 +10,9 @@ class EventHandler
 
   def handle
     AnalyticsCallbackEventHandler.new(params, meeting_id).handle
-    RecordingReadyEventHandler.new(params, meeting_id).handle
+    if Rails.configuration.x.recording_disabled
+      RecordingReadyEventHandler.new(params, meeting_id).handle
+    end
     params
   end
 end
